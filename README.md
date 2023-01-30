@@ -28,6 +28,8 @@ https://github.com/darylcata/Weather-forecast-challenge
 
 LIVE PAGE:
 
+https://darylcata.github.io/Weather-forecast-challenge/
+
 
 ## License
 MIT
