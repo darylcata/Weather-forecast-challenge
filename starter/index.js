@@ -36,7 +36,8 @@ function todaysWeather(searchedCity) {
         var image = $('<img>').attr('src', 'http://openweathermap.org/img/w/' + response.weather[0].icon + '.png');
         var degreeMain = $('<p>').text('Temp: ' + celcius + '°C');
         var humidityMain = $('<p>').text('Humidity : ' + response.main.humidity + '%');
-        var windMain = $('<p>').text('Wind: ' + response.wind.speed + 'KPH');
+        var wind = windSpeed(response.wind.speed);
+        var windMain = $('<p>').text('Wind: ' + wind + 'KPH');
 
         weatherForecast(searchedCity);
 
@@ -51,6 +52,13 @@ function todaysWeather(searchedCity) {
 function tempConvert(kelvin) {
     var celcius = (kelvin - 273.15).toFixed(2);
     return celcius;
+};
+
+//function to convert wind speed from m/s to kph
+
+function windSpeed(wind) {
+    var convertedWind = ((wind * 3600) / 1000).toFixed(2);
+    return convertedWind;
 };
 
 // function to display the 5days forecast
@@ -68,12 +76,14 @@ function weatherForecast(searchedCity) {
             if (forecastArray[i].dt_txt.split(' ')[1] === '12:00:00') {
                 var celcius = tempConvert(forecastArray[i].main.temp);
                 var mainCity = $('<div>');
-                mainCity.addClass('col forecast bg-primary text-white ml-3 mb-3 rounded');
-                var date = $('<h5>').text(response.list[i].dt_txt.split(" ")[0]);
+                mainCity.addClass('col forecast bg-secondary text-white ml-3 mb-3 rounded');
+                var fixedDate = moment(response.list[i].dt_txt.split(" ")[0],'YYYY[-]MM[-]DD').format('DD[/]MM[/]YYYY');
+                var date = $('<h5>').text(fixedDate);
                 var image = $('<img>').attr('src', 'http://openweathermap.org/img/w/' + forecastArray[i].weather[0].icon + '.png');
                 var degreeMain = $('<p>').text('Temp : '+ celcius + '°C');               
                 var humidityMain = $('<p>').text('Humidity : ' + forecastArray[i].main.humidity + '%');
-                var windMain = $('<p>').text('Wind : ' + forecastArray[i].wind.speed + 'KPH');                
+                var wind = windSpeed(forecastArray[i].wind.speed)
+                var windMain = $('<p>').text('Wind : ' + wind + 'KPH');                
                 mainCity.append(date).append(image).append(degreeMain).append(windMain).append(humidityMain);
                 $('#forecast').append(mainCity);
             }
