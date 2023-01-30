@@ -85,14 +85,15 @@ function weatherForecast(searchedCity) {
 
 // function to create button for searched city
 function searchedCityButton(searchedCity) {
-    var li = $('<li>');
+    var div = $('<div>');
     var btn = $('<button>');
 
     btn.attr('id', 'new-button');
+    btn.addClass('btn btn-secondary');
     btn.text(searchedCity);
-    li.append(btn);
-    $('#history').prepend(li);
-
+    div.append(btn);
+    div.addClass('list-group p-1')
+    $('#history').prepend(div);
     $('#new-button').on('click', function () {
         var thisCity = $(this).text();
         todaysWeather(thisCity);
